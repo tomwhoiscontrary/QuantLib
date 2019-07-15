@@ -27,6 +27,7 @@
 #define quantlib_vanilla_swap_hpp
 
 #include <ql/instruments/swap.hpp>
+#include <ql/instruments/interestrateswap.hpp>
 #include <ql/time/daycounter.hpp>
 #include <ql/time/schedule.hpp>
 #include <boost/optional.hpp>
@@ -62,9 +63,8 @@ namespace QuantLib {
         - the correctness of the returned value is tested by checking
           it against a known good value.
     */
-    class VanillaSwap : public Swap {
+    class VanillaSwap : public InterestRateSwap {
       public:
-        enum Type { Receiver = -1, Payer = 1 };
         class arguments;
         class results;
         class engine;
@@ -91,6 +91,7 @@ namespace QuantLib {
 
         const Schedule& floatingSchedule() const;
         const ext::shared_ptr<IborIndex>& iborIndex() const;
+        ext::shared_ptr<IborIndex> floatingIndex() const;
         Spread spread() const;
         const DayCounter& floatingDayCount() const;
 
@@ -191,6 +192,10 @@ namespace QuantLib {
     }
 
     inline const ext::shared_ptr<IborIndex>& VanillaSwap::iborIndex() const {
+        return iborIndex_;
+    }
+
+    inline ext::shared_ptr<IborIndex> VanillaSwap::floatingIndex() const {
         return iborIndex_;
     }
 

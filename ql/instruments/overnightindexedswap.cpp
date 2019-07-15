@@ -38,7 +38,7 @@ namespace QuantLib {
                     BusinessDayConvention paymentAdjustment,
                     Calendar paymentCalendar,
                     bool telescopicValueDates)
-    : Swap(2), type_(type),
+    : InterestRateSwap(2), type_(type),
       nominals_(std::vector<Real>(1, nominal)),
       paymentFrequency_(schedule.tenor().frequency()),
       paymentCalendar_(paymentCalendar.empty() ? schedule.calendar() : paymentCalendar),
@@ -63,7 +63,7 @@ namespace QuantLib {
                     BusinessDayConvention paymentAdjustment,
                     Calendar paymentCalendar,
                     bool telescopicValueDates)
-    : Swap(2), type_(type), nominals_(nominals),
+    : InterestRateSwap(2), type_(type), nominals_(nominals),
       paymentFrequency_(schedule.tenor().frequency()),
       paymentCalendar_(paymentCalendar.empty() ? schedule.calendar() : paymentCalendar),
       paymentAdjustment_(paymentAdjustment), paymentLag_(paymentLag),

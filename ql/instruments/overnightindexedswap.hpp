@@ -28,6 +28,7 @@
 #define quantlib_overnight_indexed_swap_hpp
 
 #include <ql/instruments/swap.hpp>
+#include <ql/instruments/interestrateswap.hpp>
 #include <ql/time/daycounter.hpp>
 #include <ql/time/businessdayconvention.hpp>
 #include <ql/time/calendar.hpp>
@@ -38,9 +39,8 @@ namespace QuantLib {
     class OvernightIndex;
 
     //! Overnight indexed swap: fix vs compounded overnight rate
-    class OvernightIndexedSwap : public Swap {
+    class OvernightIndexedSwap : public InterestRateSwap {
     public:
-        enum Type { Receiver = -1, Payer = 1 };
         OvernightIndexedSwap(
                         Type type,
                         Real nominal,
@@ -80,10 +80,13 @@ namespace QuantLib {
         const DayCounter& fixedDayCount() const { return fixedDC_; }
 
         const ext::shared_ptr<OvernightIndex>& overnightIndex() const { return overnightIndex_; }
+        ext::shared_ptr<IborIndex> floatingIndex() const { return ext::static_pointer_cast<IborIndex>(overnightIndex()); }
+
         Spread spread() const { return spread_; }
 
         const Leg& fixedLeg() const { return legs_[0]; }
         const Leg& overnightLeg() const { return legs_[1]; }
+        const Leg& floatingLeg() const { return overnightLeg(); }
         //@}
 
         //! \name Results
@@ -93,7 +96,10 @@ namespace QuantLib {
         Rate fairRate() const;
 
         Real overnightLegBPS() const;
+        Real floatingLegBPS() const { return overnightLegBPS(); }
         Real overnightLegNPV() const;
+        Real floatingLegNPV() const { return overnightLegNPV(); }
+
         Spread fairSpread() const;
         //@}
       private:
