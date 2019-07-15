@@ -77,10 +77,10 @@ namespace QuantLib {
         Frequency paymentFrequency() { return paymentFrequency_; }
 
         Rate fixedRate() const { return fixedRate_; }
-        const DayCounter& fixedDayCount() { return fixedDC_; }
+        const DayCounter& fixedDayCount() const { return fixedDC_; }
 
         const ext::shared_ptr<OvernightIndex>& overnightIndex() const { return overnightIndex_; }
-        Spread spread() { return spread_; }
+        Spread spread() const { return spread_; }
 
         const Leg& fixedLeg() const { return legs_[0]; }
         const Leg& overnightLeg() const { return legs_[1]; }
@@ -90,7 +90,7 @@ namespace QuantLib {
         //@{
         Real fixedLegBPS() const;
         Real fixedLegNPV() const;
-        Real fairRate() const;
+        Rate fairRate() const;
 
         Real overnightLegBPS() const;
         Real overnightLegNPV() const;
